@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:head></h:head>
+	<h:form>
+		<rich:panel id="panel1" header="Tree Panel" styleClass="wh_panel"
+			headerClass="wh_panel_header" bodyClass="wh_panel_body">
+			<rich:tree id="tree1" value="#{stations.rootNodes}" var="station"
+				selectionType="ajax" toggleType="ajax"
+				selection="#{stations.selection}"
+				selectionChangeListener="#{stations.selectionChanged}">
+				<rich:treeNode expanded="false">
+					
+				</rich:treeNode>
+			</rich:tree>
+		</rich:panel>
+
+
+	</h:form>
+</ui:composition>

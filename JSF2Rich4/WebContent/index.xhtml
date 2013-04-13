@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>RichFaces Window</title>
+	<script type="text/javascript" src="resources/jquery.js" />
+	<script type="text/javascript" src="resources/jquery.dataTables.min.js" />
+	<script type="text/javascript" src="resources/jquery-ui.js" />
+	<script type="text/javascript"
+		src="resources/jquery.dataTables.rowGrouping.js" />
+	<script type="text/javascript"
+		src="resources/jquery.dataTables.rowReordering.js" />
+	<h:outputScript>
+		$(document).ready( 
+			function () {
+							
+				$('table[id="form:studData"]').dataTable().rowGrouping({	
+						iGroupingColumnIndex: 1,
+						bExpandableGrouping: true
+					});
+				alert("outside jquery");
+				});
+			
+		</h:outputScript>
+	
+</h:head>
+
+<body>
+	<h:form id="form">
+		<rich:panel>
+			<rich:dataScroller for="studData" maxpages="10" id="dsTop"
+				fastcontrols="hide" renderifsinglepage="false" rerender="dsBtm"></rich:dataScroller>
+			<rich:dataTable id="studData" rowclasses="greyBg, whiteBg"
+				styleclass="tablesorter" value="#{studDynamicDataModel}" var="item"
+				rowkeyvar="row" rows="5" width="674" border="0" cellspacing="0"
+				cellpadding="0">
+				<rich:column sortable="true" sortby="#{item.id}">
+					<f:facet styleclass="header" name="header">
+						<h:outputText value="ID">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.id}"></h:outputText>
+				</rich:column>
+				<rich:column sortable="true" sortby="#{item.firstName}">
+					<f:facet styleclass="header" name="header">
+						<h:outputText value="First Name"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.firstName}"></h:outputText>
+				</rich:column>
+				<rich:column sortable="true" sortby="#{item.lastName}">
+					<f:facet styleclass="header" name="header">
+						<h:outputText value="Last Name"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{item.lastName}"></h:outputText>
+				</rich:column>
+			</rich:dataTable>
+			<rich:dataScroller for="studData" maxpages="10" id="dsBtm"
+				fastcontrols="hide" renderifsinglepage="false" rerender="dsTop"></rich:dataScroller>
+		</rich:panel>
+	</h:form>
+</body>
+</html>

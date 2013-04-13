@@ -1,0 +1,3 @@
+[submodule "JSFTestApplication"]
+	path = JSFTestApplication
+	url = https://github.com/msher420/TestRepo.git

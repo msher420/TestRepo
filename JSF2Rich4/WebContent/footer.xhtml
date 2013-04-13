@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:head>
+		<script type="text/javascript"
+			src="http://jquery-datatables-row-grouping.googlecode.com/svn/trunk/media/js/jquery.min.js" />
+		<script type="text/javascript"
+			src="http://jquery-datatables-row-grouping.googlecode.com/svn/trunk/media/js/jquery.dataTables.min.js" />
+		<script type="text/javascript"
+			src="http://jquery-datatables-row-grouping.googlecode.com/svn/trunk/media/js/jquery-ui.js" />
+		<script type="text/javascript"
+			src="http://jquery-datatables-row-grouping.googlecode.com/svn/trunk/media/js/jquery.dataTables.rowGrouping.js" />
+
+	</h:head>
+	<body>
+		<h:form method="post">
+			<rich:panel>
+				<rich:dataScroller for="riskData" maxpages="5" id="dsTop"
+					fastcontrols="hide" renderifsinglepage="false" rerender="dsBtm"></rich:dataScroller>
+				<br></br>
+				<h:selectOneMenu>
+					<f:selectItem itemLabel="3" itemValue="3" />
+					<f:selectItem itemLabel="6" itemValue="6" />
+					<f:selectItem itemLabel="9" itemValue="9" />
+					<f:selectItem itemLabel="12" itemValue="12" />
+					<a4j:ajax event="change" listener="#{listenerBean.valueChange}"
+						render="@form">
+					</a4j:ajax>
+				</h:selectOneMenu>
+
+					<rich:dataTable id="riskData" rowclasses="greyBg, whiteBg"
+						styleclass="tablesorter" value="#{tempDataModel}" var="item"
+						rowkeyvar="row" rows="3" width="674" border="0" cellspacing="0"
+						cellpadding="0" sortMode="single">
+
+					<rich:column sortBy="#{item.busName}" sortOrder="#{sortBean.order}">
+						<f:facet name="header">
+							<a4j:commandLink value="BUSINESS NAME" action="#{sortBean.sortByBus}" immediate="true"
+								 render="riskData" />
+						</f:facet>
+						<h:outputText value="#{item.busName}">
+						</h:outputText>
+					</rich:column>
+
+					<rich:column sortBy="#{item.regionName}" sortOrder="#{sortBean.orderRegion}">
+						<f:facet name="header">
+							<a4j:commandLink value="REGION NAME"
+								 action="#{sortBean.sortByRegion}" 
+								 render="riskData" />
+						</f:facet>
+						<h:outputText value="#{item.regionName}">
+						</h:outputText>
+					</rich:column>
+
+
+					<rich:column>
+						<f:facet name="header">
+							<h:outputText value="RISK ID" />
+						</f:facet>
+						<h:outputText value="#{item.riskID}" />
+					</rich:column>
+						<rich:column sortBy="#{item.policy.date}" sortOrder="#{sortBean.orderPolicyDt}">
+						<f:facet name="header">
+							<a4j:commandLink value="REGION NAME"
+								immediate="true" action="#{sortBean.sortByPolicyDt}" render="@form" />
+						</f:facet>
+						<h:outputText value="#{item.policy.date}">
+						</h:outputText>
+					</rich:column>
+
+				</rich:dataTable>
+				<rich:dataScroller for="riskData" maxpages="10" id="dsBtm"
+					fastcontrols="hide" renderifsinglepage="false" rerender="dsTop"></rich:dataScroller>
+			</rich:panel>
+			
+		</h:form>
+	</body>
+</ui:composition>

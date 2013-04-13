@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:head>Sheriff</h:head>
+	<h:form>
+		<rich:dataTable width="700" var="record"
+			value="#{dataLoader.biDispayHolders}">
+			<f:facet name="header">
+				<rich:columnGroup >
+					<rich:column>
+						<h:outputText value="RISK ID" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="POLICY DT" />
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+
+			<rich:column colspan="2">
+				<rich:collapsibleSubTableToggler for="temp" />
+				<h:outputText value="#{record.businessName}" />
+			</rich:column>
+			<rich:collapsibleSubTable var="rec"
+				value="#{record.businessModRates}" id="temp">
+				<rich:column>
+					<h:outputText value="#{rec.riskID}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{rec.policy.date}" />
+				</rich:column>
+			</rich:collapsibleSubTable>
+		</rich:dataTable>
+
+	</h:form>
+</ui:composition>
