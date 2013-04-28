@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head></h:head>
+<body>
+	<h:form>
+		<a4j:commandButton action="#{reportBean.loadReport()}"
+			render="reportPanel"></a4j:commandButton>
+		<rich:collapsiblePanel id="reportPanel">
+			<rich:messages ajaxRendered="true" />
+			<fieldset>
+				<h:panelGroup id="inputPanel">
+					<h:selectOneMenu value="#{reportBean.currentCriteria}"
+						disabled="#{empty reportBean.report.unfilledCsrList}">
+						<f:selectItem itemValue="#{null}" itemLabel="-- selectone --" />
+						<f:selectItems value="#{reportBean.report.unfilledCsrList}"
+							var="sel" itemValue="#{sel.criteriaName}"
+							itemLabel="#{sel.criteriaName}" />
+						<a4j:ajax event="change" listener="#{reportBean.componentchange}"
+							render="loginLabel">
+						</a4j:ajax>
+					</h:selectOneMenu>
+					<h:panelGroup id="loginLabel">
+						<h:inputText value="#{reportBean.currentCriteriaValue}"
+							id="inputTextId" rendered="#{reportBean.renderComponent() }"
+							validator="#{reportBean.validateCriteriaValue}" />
+						<rich:calendar rendered="#{reportBean.renderDate()}"
+							required="true" value="#{reportBean.criteriaFromDt}" />
+						<rich:calendar rendered="#{reportBean.renderDate()}"
+							required="true" value="#{reportBean.criteriaToDt}" />
+
+						<a4j:commandButton value="Add"
+							disabled="#{reportBean.renderAdd()}"
+							action="#{reportBean.updateReport()}" render="reportPanel"></a4j:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+			</fieldset>
+			<fieldset>
+				<h:panelGroup id="outputPanel">
+					<a4j:repeat value="#{reportBean.report.filledCsrList}" var="sel"
+						iterationStatusVar="row">
+						<h:outputText value="#{sel.criteriaName}" />
+						<h:outputText value="           " />
+						<h:outputText value="#{sel.criteriaValue}" />
+
+						<a4j:commandButton value="Del"
+							actionListener="#{reportBean.deleteCriteria}"
+							render="reportPanel,outputPanel">
+							<f:attribute name="rowKey" value="#{row.index}" />
+						</a4j:commandButton>
+						<br />
+					</a4j:repeat>
+				</h:panelGroup>
+			</fieldset>
+		</rich:collapsiblePanel>
+	</h:form>
+</body>
+</html>
